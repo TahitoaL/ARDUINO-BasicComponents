@@ -1,11 +1,9 @@
 class BasicSensor {
 
     public:
-        BasicSensor(int pin, char* id, char* name);
         BasicSensor(int pin, char* id, char* name, int defaultValue);
 
-        void setUp();
-        virtual int readValue();
+        virtual void setUp();
 
         char* getId() const;
         char* getName() const;
@@ -17,6 +15,7 @@ class BasicSensor {
         char* _name;
         int _pin;
         int _value[2];
+        int _defaultValue;
 
 };
 
@@ -25,12 +24,14 @@ class BasicSensor {
 class DigitalSensor : public BasicSensor {
 
     public:
-        DigitalSensor(int pin, char* id, char* name);
-        DigitalSensor(int pin, char* id, char* name, int defaultValue);
+        DigitalSensor(int pin, boolean pullup, char* id, char* name);
+        DigitalSensor(int pin, boolean pullup, char* id, char* name, int defaultValue);
 
-        int readState();
+        virtual void setUp();
+        boolean readState();
     
     protected:
+        boolean _pullup;
         int _state[2];
 
 };
@@ -43,9 +44,14 @@ class AnalogSensor : public BasicSensor {
         AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue);
         AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue, int defaultValue);
 
+        int readValue();
+        int getValue();
         int readState();
+        int getState();
+        void savePreviousState();
 
     protected:
+        void refreshValues();
         int _state[2];
         int _minValue;
         int _maxValue;
