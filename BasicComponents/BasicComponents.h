@@ -1,9 +1,10 @@
 #include "Arduino.h"
 
-#ifndef BasicSensors_h
-#define BasicSensors_h
+#ifndef BasicComponents_h
+#define BasicComponents_h
 
 #include "core/BasicSensorsBase.h"
 #include "core/BasicReceiversBase.h"
+#include "core/Duration.h"
 
 #endif
