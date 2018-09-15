@@ -2,7 +2,7 @@ class BasicReceiverCollection {
 
     public:
         BasicReceiverCollection(int id, string name);
-        static const int MAX_RECEIVERS;
+        static const int MAX_RECEIVERS = 50;
         const int getId();
         const string getName();
         int getSize();
