@@ -8,6 +8,7 @@
 #include "core/BasicDuration.h"
 #include "core/BasicTimer.h"
 #include "core/BasicChronometer.h"
+#include "core/BasicSensorCollection.h"
 #include "core/BasicReceiverCollection.h"
 
 #endif
