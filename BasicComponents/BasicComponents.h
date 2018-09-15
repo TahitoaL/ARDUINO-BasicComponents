@@ -7,5 +7,6 @@
 #include "core/BasicReceiversBase.h"
 #include "core/BasicDuration.h"
 #include "core/BasicTimer.h"
+#include "core/BasicChronometer.h"
 
 #endif

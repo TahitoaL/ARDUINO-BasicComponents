@@ -1,12 +1,12 @@
 class BasicTimer {
 
     public:
-        Timer(Duration const& duration);
+        BasicTimer(BasicDuration const& duration);
         void init();
         bool timeIsUp();
-        Duration& getDuration();
+        BasicDuration& getDuration();
 
     protected:
-        Duration _duration;
+        BasicDuration _duration;
     
 };
