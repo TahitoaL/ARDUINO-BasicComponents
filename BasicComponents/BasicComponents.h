@@ -5,6 +5,7 @@
 
 #include "core/BasicSensorsBase.h"
 #include "core/BasicReceiversBase.h"
-#include "core/Duration.h"
+#include "core/BasicDuration.h"
+#include "core/BasicTimer.h"
 
 #endif
