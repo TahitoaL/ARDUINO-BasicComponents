@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicSensorBase.h"
+#include "BasicComponents.h"
 
 BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue) : _pin(pin), _id(id), _name(name), _defaultValue(defaultValue)
 {

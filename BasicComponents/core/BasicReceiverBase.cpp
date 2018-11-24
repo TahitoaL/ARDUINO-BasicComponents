@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicReceiverBase.h"
+#include "BasicComponents.h"
 
 BasicReceiver::BasicReceiver(char pin, int id, string name)
 {

@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicSensorImplementation.h"
+#include "BasicComponents.h"
 
 SpeedSensor::SpeedSensor(char pin, int id, string name, float wheelDiameter) : DigitalSensor(pin, id, name)
 {

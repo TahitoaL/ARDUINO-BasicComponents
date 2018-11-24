@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicTimer.h"
+#include "BasicComponents.h"
 
 BasicTimer::BasicTimer(BasicDuration const& duration)
 {

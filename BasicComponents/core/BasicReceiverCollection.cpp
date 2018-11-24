@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicReceiverCollection.h"
+#include "BasicComponents.h"
 
 BasicReceiverCollection::BasicReceiverCollection(int id, string name)
 {

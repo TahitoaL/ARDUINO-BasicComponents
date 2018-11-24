@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicDuration.h"
+#include "BasicComponents.h"
 
 BasicDuration::BasicDuration()
 {

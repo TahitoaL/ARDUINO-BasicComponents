@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "BasicSensorCollection.h"
+#include "BasicComponents.h"
 
 BasicSensorCollection::BasicSensorCollection(int id, string name)
 {
