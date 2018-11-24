@@ -7,8 +7,25 @@ class SpeedSensor : public DigitalSensor {
         boolean isStop();
 
     protected:
-        _wheelDiameter;
+        float _wheelDiameter;
         boolean _stop;
         BasicDuration _detectionDuration;
+
+};
+
+class ColorSensor : public BasicSensor {
+
+    public:
+        ColorSensor(char pin, int id, string name);
+        int readValue(boolean save = false);
+        int readColor(int color);
+        boolean lineDetected();
+
+
+    protected:
+        int _red;
+        int _green;
+        int _blue;
+        int _clear;
 
 };
