@@ -8,6 +8,7 @@ class BasicChronometer {
         BasicDuration& getDurationSinceStart();
 
     protected:
-        BasicDuration _durationSinceStart();
+        long _durationSinceStart;
+        long _startMillis;
 
 };
