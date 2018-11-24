@@ -10,7 +10,7 @@ class BasicDuration {
         int getSeconds();
         int getMilliseconds();
         int getDurationTime(); //in milliseconds
-        static const int MAX_HOURS = 24;
+        static const int MAX_HOURS = 72;
 
     protected:
         int _hours;
