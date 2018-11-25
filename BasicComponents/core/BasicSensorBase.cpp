@@ -1,10 +1,15 @@
 #include "Arduino.h"
 #include "BasicComponents.h"
 
-BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue) : _pin(pin), _id(id), _name(name), _defaultValue(defaultValue)
+BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue = 0)
 {
-    _value[0] = 0;
-    _value[1] = 0;
+    _pin = pin;
+    _id = id;
+    _name = name;
+    _value[0] = defaultValue; //current value
+    _value[1] = 0; //last value
+    _state[0] = 0;
+    _state[1] = 0;
 }
 
 void BasicSensor::setUp()
@@ -25,6 +30,29 @@ char* BasicSensor::getName() const
 int BasicSensor::getPin() const
 {
     return _pin;
+}
+
+void BasicSensor::savePreviousData()
+{
+    _state[1] = _state[0];
+    _value[1] = _value[0];
+    _state[0] = readState();
+    _value[0] = readValue();
+}
+
+boolean BasicSensor::stateHasChanged()
+{
+    return (_state[1] == _state[0]) ? false : true;
+}
+
+boolean BasicSensor::stateHasRising()
+{
+    return (_state[0] > _state[1]) ? true : false;
+}
+
+boolean BasicSensor::stateHasFalling()
+{
+    return (_state[0] < _state[1]) ? true : false;
 }
 
 //-------------------------------------------------------------------
@@ -53,7 +81,22 @@ void DigitalSensor::setUp()
 
 boolean DigitalSensor::readState()
 {
-    return digitalRead(_pin) == 1 ? true : false;
+    return (digitalRead(_pin) == HIGH) ? true : false;
+}
+
+int DigitalSensor::readValue()
+{
+    return (digitalRead(_pin) == HIGH) ? 1 : 0;
+}
+
+boolean DigitalSensor::getState()
+{
+    return _state[0];
+}
+
+int DigitalSensor::getValue()
+{
+    return _value[0];
 }
 
 //-------------------------------------------------------------------
@@ -111,9 +154,4 @@ int AnalogSensor::readState()
 int AnalogSensor::getState()
 {
     return _state[0];
-}
-
-void AnalogSensor::savePreviousState()
-{
-    _state[1] = _state[0];
 }
