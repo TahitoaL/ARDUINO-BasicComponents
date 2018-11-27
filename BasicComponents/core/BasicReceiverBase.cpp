@@ -3,84 +3,130 @@
 
 BasicReceiver::BasicReceiver(char pin, int id, string name)
 {
-
+    _pin = pin;
+    _id = id;
+    _name = name;
+    _state = false;
+    _blinkActivated = false;
 }
 
 void BasicReceiver::setUp()
 {
-
+    pinMode(_pin, OUTPUT);
 }
 
 void BasicReceiver::blink(int blinkPerMinute)
 {
-
+    _timer = new BasicTimer(new BasicDuration(60000 / (2 * blinkPerMinute)));
+    _timer.init();
+    _blinkActivated = true;
 }
 
 void BasicReceiver::blink(BasicDuration const& blinkDuration)
 {
-
+    _timer = new BasicTimer(blinkDuration);
+    _timer.init();
+    _blinkActivated = true;
 }
 
 void BasicReceiver::blink(BasicDuration const& onDuration, BasicDuration const& offDuration)
-{
+{}
 
+void BasicReceiver::stopBlink()
+{
+    _blinkActivated = false;
+    _timer = NULL; //May not work
 }
 
 void BasicReceiver::refresh()
 {
-
+    if (_blinkActivated)
+    {
+        if (_timer.timeIsUp())
+        {
+            if (_state)
+            {
+                switchOff();
+            }
+            else
+            {
+                switchOn();
+            }
+            _timer.init();
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
 
 DigitalReceiver::DigitalReceiver(char pin, int id, string name) : BasicReceiver (pin, id, name)
 {
-
+    
 }
 
-void BasicReceiver::switchOn()
+void DigitalReceiver::switchOn()
 {
-
+    digitalWrite(_pin, HIGH);
+    _state = true;
 }
 
-void BasicReceiver::switchOn(BasicDuration const& duration)
+boolean DigitalReceiver::getState()
 {
-
+    return _state;
 }
 
-void BasicReceiver::switchOff()
-{
+void DigitalReceiver::switchOn(BasicDuration const& duration)
+{}
 
+void DigitalReceiver::switchOff()
+{
+    _digitalWrite(_pin, LOW);
+    _state = false;
 }
 
 //------------------------------------------------------------------------------
 
 PwmReceiver::PwmReceiver(char pin, int id, string name, int dutyCycleValue = 100) : BasicReceiver(pin, id, name)
 {
+    _dutyCycleValue = dutyCycleValue;
+}
 
+void PwmReceiver::setUp() // Add verification of PWM pins
+{
+    pinMode(_pin, OUTPUT);
+}
+
+boolean PwmReceiver::getState()
+{
+    return (_dutyCycleValue > 0) ? true : false;
 }
 
 void PwmReceiver::switchOn()
 {
-
+    analogWrite(_pin, map(_dutyCycleValue, 0, 100, 0, 255));
 }
 
 void PwmReceiver::switchOn(BasicDuration const& duration)
-{
-
-}
+{}
 
 void PwmReceiver::switchOff()
 {
-
+    analogWrite(_pin, 0);
 }
 
 void PwmReceiver::switchOn(int dutyCycleValue)
 {
-
+    if (dutyCycleValue <= 100)
+    {
+        analogWrite(_pin, map(dutyCycleValue, 0, 100, 0, 255));
+    }
 }
 
 void setDutyCycleValue(int dutyCycleValue)
 {
-    
+    if (dutyCycleValue <= 100)
+    {
+        _dutyCycleValue = dutyCycleValue;
+        switchOn();
+    }
 }
