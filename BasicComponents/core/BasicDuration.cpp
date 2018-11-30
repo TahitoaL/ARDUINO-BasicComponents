@@ -107,6 +107,14 @@ int BasicDuration::getDurationTime()
     return (((_hours * 60 + _minutes) * 60 + seconds) * 1000 + _milliseconds)
 }
 
+void BasicDuration::reset()
+{
+    _milliseconds = 0;
+    _seconds = 0;
+    _minutes = 0;
+    _hours = 0;
+}
+
 /*---------------------*\
         OPERATORS
 \*---------------------*/
@@ -137,4 +145,12 @@ bool operator<(BasicDuration& a, BasicDuration& b)
         return true;
     else
         return false;
+}
+
+bool operator>(BasicDuration& a, BasicDuration& b)
+{
+    if (a.isInferiorTo(b))
+        return false;
+    else
+        return true;
 }

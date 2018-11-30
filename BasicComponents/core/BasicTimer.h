@@ -8,5 +8,6 @@ class BasicTimer {
 
     protected:
         BasicDuration _duration;
+        long _timeStart;
     
 };

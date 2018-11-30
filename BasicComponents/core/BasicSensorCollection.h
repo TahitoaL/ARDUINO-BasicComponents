@@ -6,15 +6,17 @@ class BasicSensorCollection {
         const int getId();
         const string getName();
         int getSize();
-        void addSensor(BasicSensor& sensor);
+        boolean addSensor(BasicSensor& sensor);
         BasicSensor* getSensor(int index);
         BasicSensor* getSensor(char pin);
         void removeSensor(int index);
         void removeSensor(char pin);
         void removeSensor(BasicSensor& sensor);
+        void setUp();
         void savePreviousData();
 
     protected:
+        BasicSensor* _sensors[MAC_SENSORS];
         int _id;
         int _size;
         string _name;

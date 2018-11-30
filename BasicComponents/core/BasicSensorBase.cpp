@@ -1,10 +1,15 @@
 #include "Arduino.h"
 #include "BasicComponents.h"
 
-BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue) : _pin(pin), _id(id), _name(name), _defaultValue(defaultValue)
+BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue = 0)
 {
-    _value[0] = 0;
-    _value[1] = 0;
+    _pin = pin;
+    _id = id;
+    _name = name;
+    _value[0] = defaultValue; //current value
+    _value[1] = 0; //last value
+    _state[0] = false;
+    _state[1] = false;
 }
 
 void BasicSensor::setUp()
@@ -25,6 +30,29 @@ char* BasicSensor::getName() const
 int BasicSensor::getPin() const
 {
     return _pin;
+}
+
+void BasicSensor::savePreviousData()
+{
+    _state[1] = _state[0];
+    _value[1] = _value[0];
+    _state[0] = readState();
+    _value[0] = readValue();
+}
+
+boolean BasicSensor::stateHasChanged()
+{
+    return (_state[1] == _state[0]) ? false : true;
+}
+
+boolean BasicSensor::stateHasRising()
+{
+    return (_state[0] > _state[1]) ? true : false;
+}
+
+boolean BasicSensor::stateHasFalling()
+{
+    return (_state[0] < _state[1]) ? true : false;
 }
 
 //-------------------------------------------------------------------
@@ -53,7 +81,36 @@ void DigitalSensor::setUp()
 
 boolean DigitalSensor::readState()
 {
-    return digitalRead(_pin) == 1 ? true : false;
+    if (!pullup)
+    {
+        return (digitalRead(_pin) == HIGH) ? true : false;   
+    }
+    else
+    {
+        return (digitalRead(_pin) == LOW) ? true : false;
+    }
+}
+
+int DigitalSensor::readValue()
+{
+    if (!pullup)
+    {
+        return (digitalRead(_pin) == HIGH) ? 1 : 0;
+    }
+    else
+    {
+        return (digitalRead(_pin) == LOW) ? 1 : 0;
+    }
+}
+
+boolean DigitalSensor::getState()
+{
+    return _state[0];
+}
+
+int DigitalSensor::getValue()
+{
+    return _value[0];
 }
 
 //-------------------------------------------------------------------
@@ -78,26 +135,15 @@ AnalogSensor::AnalogSensor(int pin, char* id, char* name, int minValue, int maxV
     _state[1] = 0;
 }
 
-void AnalogSensor::refreshValues()
+void AnalogSensor::setUp()
 {
-    _value[1] = _value[0];
-    _value[0] = readValue();
+      
 }
 
-int AnalogSensor::readValue()
+boolean AnalogSensor::readState()
 {
-    return analogRead(_pin);
-}
-
-int AnalogSensor::getValue()
-{
-    return _value[0];
-}
-
-int AnalogSensor::readState()
-{
-    refreshValues();
-    if (_value[0] <= _thresholdValue && _state[0] != 0)
+    _value[0] = analogRead(_pin);
+    if (_value[0] <= (_thresholdValue - _hysteresisValue) && _state[0] != 0)
     {
         _state[0] = 0;
     }
@@ -108,12 +154,17 @@ int AnalogSensor::readState()
     return _state[0];
 }
 
-int AnalogSensor::getState()
+int AnalogSensor::readValue()
+{
+    return analogRead(_pin);
+}
+
+boolean AnalogSensor::getState()
 {
     return _state[0];
 }
 
-void AnalogSensor::savePreviousState()
+int AnalogSensor::getValue()
 {
-    _state[1] = _state[0];
+    return _value[0];
 }
