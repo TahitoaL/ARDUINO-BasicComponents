@@ -16,6 +16,7 @@ class BasicSensorCollection {
         void savePreviousData();
 
     protected:
+        BasicSensor* _sensors[MAC_SENSORS];
         int _id;
         int _size;
         string _name;

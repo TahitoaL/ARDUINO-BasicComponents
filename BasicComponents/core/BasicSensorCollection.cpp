@@ -79,7 +79,7 @@ void BasicSensorCollection::setUp()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor* sensor = _sensors[i];
+        BasicSensor& sensor = _sensors[i];
         sensor->setUp();
     }
 }
@@ -88,7 +88,7 @@ void BasicSensorCollection::savePreviousData()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor* sesor = _sensors[i];
+        BasicSensor& sesor = _sensors[i];
         sensor->savePreviousData();
     }
 }
