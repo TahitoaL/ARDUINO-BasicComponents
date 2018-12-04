@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "BasicComponents.h"
+#include "./../BasicComponents.h"
 
-BasicSensorCollection::BasicSensorCollection(int id, string name)
+BasicSensorCollection::BasicSensorCollection(int id, String name)
 {
     _id = id;
     _name = name;
@@ -13,7 +13,7 @@ const int BasicSensorCollection::getId()
     return _id;
 }
 
-const string BasicSensorCollection::getName()
+const String BasicSensorCollection::getName()
 {
     return _name;
 }

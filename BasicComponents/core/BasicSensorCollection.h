@@ -1,10 +1,10 @@
 class BasicSensorCollection {
 
     public:
-        BasicSensorCollection(int id, string name);
+        BasicSensorCollection(int id, String name);
         static const int MAX_SENSORS = 50; 
         const int getId();
-        const string getName();
+        const String getName();
         int getSize();
         boolean addSensor(BasicSensor& sensor);
         BasicSensor* getSensor(int index);
@@ -16,9 +16,9 @@ class BasicSensorCollection {
         void savePreviousData();
 
     protected:
-        BasicSensor* _sensors[MAC_SENSORS];
+        BasicSensor* _sensors[MAX_SENSORS];
         int _id;
         int _size;
-        string _name;
+        String _name;
 
 };

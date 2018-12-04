@@ -1,10 +1,10 @@
-const int[6] PWM_PINS = [3, 5, 6, 9, 10, 11];
-
 class BasicReceiver {
 
     public:
-        BasicReceiver(char pin, int id, string name);
+        BasicReceiver(char pin, int id, String name);
         virtual void setUp();
+        String getName();
+        int getId();
         virtual void switchOn() = 0;
         virtual void switchOn(BasicDuration const& duration) = 0;
         virtual void switchOff() = 0;
@@ -17,11 +17,12 @@ class BasicReceiver {
 
     protected:
         int _id;
-        string _name;
+        String _name;
         char _pin;
         boolean _state;
         boolean _blinkActivated;
         BasicTimer* _timer; //May not work
+        static const int[6] PWM_PINS = [3, 5, 6, 9, 10, 11];
 
 };
 
@@ -30,7 +31,7 @@ class BasicReceiver {
 class DigitalReceiver : public BasicReceiver {
 
     public:
-        DigitalReceiver(char pin, int id, string name);
+        DigitalReceiver(char pin, int id, String name);
         virtual void switchOn();
         virtual void switchOn(BasicDuration const& duration);
         virtual void switchOff();  
@@ -42,7 +43,7 @@ class DigitalReceiver : public BasicReceiver {
 class PwmReceiver : public BasicReceiver {
     
     public:
-        PwmReceiver(char pin, int id, string name, int dutyCycleValue = 100);
+        PwmReceiver(char pin, int id, String name, int dutyCycleValue = 100);
         virtual void setUp();
         virtual boolean getState();
         virtual void switchOn();

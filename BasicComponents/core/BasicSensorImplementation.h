@@ -1,7 +1,7 @@
 class SpeedSensor : public DigitalSensor {
 
     public:
-        SpeedSensor(char pin, int id, string name, float wheelDiameter);
+        SpeedSensor(char pin, int id, String name, float wheelDiameter);
         int readValue(boolean save = false);
         float readRawValue(boolean save = false);
         boolean isStop();
@@ -16,7 +16,7 @@ class SpeedSensor : public DigitalSensor {
 class ColorSensor : public BasicSensor {
 
     public:
-        ColorSensor(char pin, int id, string name);
+        ColorSensor(char pin, int id, String name);
         int readValue(boolean save = false);
         int readColor(int color);
         boolean lineDetected();

@@ -1,7 +1,7 @@
 class BasicSensor {
 
     public:
-        BasicSensor(int pin, char* id, char* name, int defaultValue);
+        BasicSensor(int pin, char id, String name, int defaultValue);
 
         virtual void setUp();
         virtual int readValue() = 0;
@@ -9,8 +9,8 @@ class BasicSensor {
         virtual int getValue() = 0;
         virtual boolean getState() = 0;
 
-        char* getId() const;
-        char* getName() const;
+        char getId() const;
+        String getName() const;
         int getPin() const;
         void savePreviousData();
         boolean stateHasChanged();
@@ -19,8 +19,8 @@ class BasicSensor {
 
 
     protected:
-        char* _id;
-        char* _name;
+        char _id;
+        String _name;
         int _pin;
         int _value[2];
         int _state[2];

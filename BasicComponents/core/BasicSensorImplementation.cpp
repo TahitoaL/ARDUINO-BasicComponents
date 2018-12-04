@@ -1,9 +1,10 @@
 #include "Arduino.h"
-#include "BasicComponents.h"
+#include "./../BasicComponents.h"
 
-SpeedSensor::SpeedSensor(char pin, int id, string name, float wheelDiameter) : DigitalSensor(pin, id, name)
-{
-
+SpeedSensor::SpeedSensor(char pin, int id, String name, float wheelDiameter) : DigitalSensor(pin, id, name) {
+    _pin = pin;
+    _id = id;
+    _name = name;
 }
 
 int SpeedSensor::readValue(boolean save = false)
@@ -23,9 +24,11 @@ boolean SpeedSensor::isStop()
 
 //-------------------------------------------------------------------
 
-ColorSensor::ColorSensor(char pin, int id, string name) : BasicSensor(pin, id, name)
+ColorSensor::ColorSensor(char pin, int id, String name) : BasicSensor(pin, id, name)
 {
-
+    _pin = pin;
+    _id = id;
+    _name = name;
 }
 
 int ColorSensor::readValue(boolean save = false)

@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "BasicComponents.h"
+#include "./../BasicComponents.h"
 
-BasicReceiver::BasicReceiver(char pin, int id, string name)
+BasicReceiver::BasicReceiver(char pin, int id, String name)
 {
     _pin = pin;
     _id = id;

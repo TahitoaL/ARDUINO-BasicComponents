@@ -1,10 +1,10 @@
 class BasicReceiverCollection {
 
     public:
-        BasicReceiverCollection(int id, string name);
+        BasicReceiverCollection(int id, String name);
         static const int MAX_RECEIVERS = 50;
         const int getId();
-        const string getName();
+        const String getName();
         int getSize();
         boolean addReceiver(BasicReceiver& receiver);
         BasicReceiver* getReceiver(int index);
@@ -23,7 +23,7 @@ class BasicReceiverCollection {
     protected:
         BasicReceiver* _receivers[MAX_RECEIVERS];
         int _id;
-        string _name;
+        String _name;
         int _size;
 
 };

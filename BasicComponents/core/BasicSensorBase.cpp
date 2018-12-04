@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "BasicComponents.h"
+#include "./../BasicComponents.h"
 
-BasicSensor::BasicSensor(int pin, char* id, char* name, int defaultValue = 0)
+BasicSensor::BasicSensor(int pin, char id, String name, int defaultValue = 0)
 {
     _pin = pin;
     _id = id;
@@ -17,12 +17,12 @@ void BasicSensor::setUp()
     pinMode(_pin, INPUT);
 }
 
-char* BasicSensor::getId() const
+char BasicSensor::getId() const
 {
     return _id;
 }
 
-char* BasicSensor::getName() const
+String BasicSensor::getName() const
 {
     return _name;
 }
@@ -57,12 +57,12 @@ boolean BasicSensor::stateHasFalling()
 
 //-------------------------------------------------------------------
 
-DigitalSensor::DigitalSensor(int pin, boolean pullup, char* id, char* name, int defaultValue) : BasicSensor(pin, id, name, defaultValue)
+DigitalSensor::DigitalSensor(int pin, boolean pullup, char id, String name, int defaultValue) : BasicSensor(pin, id, name, defaultValue)
 {
     _pullup = pullup;
 }
 
-DigitalSensor::DigitalSensor(int pin, boolean pullup, char* id, char* name) : BasicSensor(pin, id, name, 0)
+DigitalSensor::DigitalSensor(int pin, boolean pullup, char id, String name) : BasicSensor(pin, id, name, 0)
 {
     _pullup = pullup;
 }
@@ -115,7 +115,7 @@ int DigitalSensor::getValue()
 
 //-------------------------------------------------------------------
 
-AnalogSensor::AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue, int defaultValue) : BasicSensor(pin, id, name, defaultValue)
+AnalogSensor::AnalogSensor(int pin, char id, String name, int minValue, int maxValue, int thresholdValue, int hysteresisValue, int defaultValue) : BasicSensor(pin, id, name, defaultValue)
 {
     _minValue = minValue;
     _maxValue = maxValue;
@@ -125,7 +125,7 @@ AnalogSensor::AnalogSensor(int pin, char* id, char* name, int minValue, int maxV
     _state[1] = 0;
 }
 
-AnalogSensor::AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue) : BasicSensor(pin, id, name, 0)
+AnalogSensor::AnalogSensor(int pin, char id, String name, int minValue, int maxValue, int thresholdValue, int hysteresisValue) : BasicSensor(pin, id, name, 0)
 {
     _minValue = minValue;
     _maxValue = maxValue;

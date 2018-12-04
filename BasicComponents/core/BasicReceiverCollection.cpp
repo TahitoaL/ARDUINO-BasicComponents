@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "BasicComponents.h"
+#include "./../BasicComponents.h"
 
-BasicReceiverCollection::BasicReceiverCollection(int id, string name)
+BasicReceiverCollection::BasicReceiverCollection(int id, String name)
 {
     _id = id;
     _name = name;
@@ -13,7 +13,7 @@ const int BasicReceiverCollection::getId()
     return _id;
 }
 
-const string BasicReceiverCollection::getName()
+const String BasicReceiverCollection::getName()
 {
     return _name;
 }
