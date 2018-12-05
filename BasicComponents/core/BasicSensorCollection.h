@@ -1,3 +1,7 @@
+#ifndef BSC_H
+
+#define BSC_H
+
 class BasicSensorCollection {
 
     public:
@@ -22,3 +26,5 @@ class BasicSensorCollection {
         String _name;
 
 };
+
+#endif

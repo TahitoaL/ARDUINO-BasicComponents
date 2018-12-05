@@ -1,3 +1,7 @@
+#ifndef BRC_H
+
+#define BRC_H
+
 class BasicReceiverCollection {
 
     public:
@@ -27,3 +31,5 @@ class BasicReceiverCollection {
         int _size;
 
 };
+
+#endif

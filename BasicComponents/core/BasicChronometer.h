@@ -1,3 +1,7 @@
+#ifndef BC_H
+
+#define BC_H
+
 class BasicChronometer {
 
     public:
@@ -12,3 +16,5 @@ class BasicChronometer {
         long _startMillis;
 
 };
+
+#endif

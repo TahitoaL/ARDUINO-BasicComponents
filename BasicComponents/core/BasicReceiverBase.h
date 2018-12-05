@@ -1,3 +1,10 @@
+#include "./BasicDuration.h"
+#include "./BasicTimer.h"
+
+#ifndef BRB_H
+
+#define RBR_H
+
 class BasicReceiver {
 
     public:
@@ -22,7 +29,7 @@ class BasicReceiver {
         boolean _state;
         boolean _blinkActivated;
         BasicTimer* _timer; //May not work
-        static const int[6] PWM_PINS = [3, 5, 6, 9, 10, 11];
+        static const int PWM_PINS[6] = {3, 5, 6, 9, 10, 11};
 
 };
 
@@ -56,3 +63,5 @@ class PwmReceiver : public BasicReceiver {
         int _dutyCycleValue; //percentage
 
 };
+
+#endif

@@ -1,3 +1,7 @@
+#ifndef BD_H
+
+#define BD_H
+
 class BasicDuration {
 
     public:
@@ -20,3 +24,5 @@ class BasicDuration {
         int _milliseconds;
 
 };
+
+#endif BD_H

@@ -1,3 +1,7 @@
+#ifndef BSB_H
+
+#define BSB_H
+
 class BasicSensor {
 
     public:
@@ -69,3 +73,5 @@ class AnalogSensor : public BasicSensor {
         int _hysteresisValue;
 
 };
+
+#endif

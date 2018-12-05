@@ -1,3 +1,7 @@
+#ifndef BSI_H
+
+#define BSI_H
+
 class SpeedSensor : public DigitalSensor {
 
     public:
@@ -29,3 +33,5 @@ class ColorSensor : public BasicSensor {
         int _clear;
 
 };
+
+#endif

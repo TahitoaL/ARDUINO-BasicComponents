@@ -1,3 +1,7 @@
+#ifndef BT_H
+
+#define BT_H
+
 class BasicTimer {
 
     public:
@@ -11,3 +15,5 @@ class BasicTimer {
         long _timeStart;
     
 };
+
+#endif
