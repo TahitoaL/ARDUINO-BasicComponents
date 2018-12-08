@@ -9,7 +9,7 @@ class BasicChronometer {
         void start();
         void stop();
         void init();
-        BasicDuration& getDurationSinceStart();
+        BasicDuration* getDurationSinceStart();
 
     protected:
         long _durationSinceStart;

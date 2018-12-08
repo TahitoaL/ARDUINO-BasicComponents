@@ -37,8 +37,8 @@ class BasicSensor {
 class DigitalSensor : public BasicSensor {
 
     public:
-        DigitalSensor(int pin, boolean pullup, char* id, char* name);
-        DigitalSensor(int pin, boolean pullup, char* id, char* name, int defaultValue);
+        DigitalSensor(int pin, boolean pullup, char id, String name);
+        DigitalSensor(int pin, boolean pullup, char id, String name, int defaultValue);
 
         virtual void setUp();
         virtual int readValue();
@@ -56,8 +56,8 @@ class DigitalSensor : public BasicSensor {
 class AnalogSensor : public BasicSensor {
 
     public:
-        AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue);
-        AnalogSensor(int pin, char* id, char* name, int minValue, int maxValue, int thresholdValue, int hysteresisValue, int defaultValue);
+        AnalogSensor(int pin, char id, String name, int minValue, int maxValue, int thresholdValue, int hysteresisValue);
+        AnalogSensor(int pin, char id, String name, int minValue, int maxValue, int thresholdValue, int hysteresisValue, int defaultValue);
 
         virtual void setUp();
         virtual boolean readState();

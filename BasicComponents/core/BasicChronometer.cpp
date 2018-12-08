@@ -19,7 +19,7 @@ void BasicChronometer::stop()
     _durationSinceStart = millis() - _startMillis;
 }
 
-BasicDuration& BasicChronometer::getDurationSinceStart()
+BasicDuration* BasicChronometer::getDurationSinceStart()
 {
     return new BasicDuration(0, 0, 0, _durationSinceStart);
 }

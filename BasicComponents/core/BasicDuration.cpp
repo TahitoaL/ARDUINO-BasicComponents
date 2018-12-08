@@ -10,19 +10,14 @@ BasicDuration::BasicDuration(int hours = 0, int minutes = 0, int seconds = 0, in
     _seconds = seconds;
     _milliseconds = milliseconds;
 
-    _milliseconds += duration._milliseconds;
     _seconds += _milliseconds / 1000;
     _milliseconds %= 1000;
     
-    _seconds += duration._seconds;
     _minutes += _seconds / 60;
     _seconds %= 60;
 
-    _minutes += duration._minutes;
     _hours += _minutes / 60;
     _minutes %= 60;
-
-    _hours += duration._hours;
 
     if (_hours > MAX_HOURS)
     {
@@ -104,7 +99,7 @@ int BasicDuration::getMilliseconds()
 
 int BasicDuration::getDurationTime()
 {
-    return (((_hours * 60 + _minutes) * 60 + seconds) * 1000 + _milliseconds)
+    return (((_hours * 60 + _minutes) * 60 + _seconds) * 1000 + _milliseconds);
 }
 
 void BasicDuration::reset()
@@ -121,7 +116,7 @@ void BasicDuration::reset()
 
 BasicDuration operator+(BasicDuration& a, BasicDuration& b)
 {
-    Duree results(a)
+    BasicDuration results(a);
     results += b;
     return results;
 }

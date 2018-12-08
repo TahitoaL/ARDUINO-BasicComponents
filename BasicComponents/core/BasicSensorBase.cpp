@@ -81,7 +81,7 @@ void DigitalSensor::setUp()
 
 boolean DigitalSensor::readState()
 {
-    if (!pullup)
+    if (!_pullup)
     {
         return (digitalRead(_pin) == HIGH) ? true : false;   
     }
@@ -93,7 +93,7 @@ boolean DigitalSensor::readState()
 
 int DigitalSensor::readValue()
 {
-    if (!pullup)
+    if (!_pullup)
     {
         return (digitalRead(_pin) == HIGH) ? 1 : 0;
     }

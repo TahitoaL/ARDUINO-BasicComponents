@@ -15,17 +15,32 @@ void BasicReceiver::setUp()
     pinMode(_pin, OUTPUT);
 }
 
+const String BasicReceiver::getName()
+{
+    return _name;
+}
+
+const int BasicReceiver::getId()
+{
+    return _id;
+}
+
+const char BasicReceiver::getPin()
+{
+    return _pin;
+}
+
 void BasicReceiver::blink(int blinkPerMinute)
 {
     _timer = new BasicTimer(new BasicDuration(60000 / (2 * blinkPerMinute)));
-    _timer.init();
+    _timer->init();
     _blinkActivated = true;
 }
 
 void BasicReceiver::blink(BasicDuration const& blinkDuration)
 {
     _timer = new BasicTimer(blinkDuration);
-    _timer.init();
+    _timer->init();
     _blinkActivated = true;
 }
 
@@ -42,7 +57,7 @@ void BasicReceiver::refresh()
 {
     if (_blinkActivated)
     {
-        if (_timer.timeIsUp())
+        if (_timer->timeIsUp())
         {
             if (_state)
             {
@@ -52,14 +67,14 @@ void BasicReceiver::refresh()
             {
                 switchOn();
             }
-            _timer.init();
+            _timer->init();
         }
     }
 }
 
 //------------------------------------------------------------------------------
 
-DigitalReceiver::DigitalReceiver(char pin, int id, string name) : BasicReceiver (pin, id, name)
+DigitalReceiver::DigitalReceiver(char pin, int id, String name) : BasicReceiver (pin, id, name)
 {
     
 }
@@ -80,13 +95,13 @@ void DigitalReceiver::switchOn(BasicDuration const& duration)
 
 void DigitalReceiver::switchOff()
 {
-    _digitalWrite(_pin, LOW);
+    digitalWrite(_pin, LOW);
     _state = false;
 }
 
 //------------------------------------------------------------------------------
 
-PwmReceiver::PwmReceiver(char pin, int id, string name, int dutyCycleValue = 100) : BasicReceiver(pin, id, name)
+PwmReceiver::PwmReceiver(char pin, int id, String name, int dutyCycleValue = 100) : BasicReceiver(pin, id, name)
 {
     _dutyCycleValue = dutyCycleValue;
 }
@@ -122,7 +137,7 @@ void PwmReceiver::switchOn(int dutyCycleValue)
     }
 }
 
-void setDutyCycleValue(int dutyCycleValue)
+void PwmReceiver::setDutyCycleValue(int dutyCycleValue)
 {
     if (dutyCycleValue <= 100)
     {

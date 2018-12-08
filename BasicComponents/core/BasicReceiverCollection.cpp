@@ -27,7 +27,7 @@ boolean BasicReceiverCollection::addReceiver(BasicReceiver& receiver)
 {
     if (_size < MAX_RECEIVERS)
     {
-        _sensors[_size] = &receiver;
+        _receivers[_size] = &receiver;
         _size++;
         return true;
     }
@@ -46,8 +46,10 @@ BasicReceiver* BasicReceiverCollection::getReceiver(char pin)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (pin == _receivers[i].pin)
-            return _receivers[i]
+        if (pin == _receivers[i]->getPin())
+        {
+            return _receivers[i];
+        }
     }
     return NULL;
 }
@@ -61,7 +63,7 @@ void BasicReceiverCollection::removeSensor(char pin)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (pin == _receivers[i].pin)
+        if (pin == _receivers[i]->getPin())
             _receivers[i] = 0;
     }
 }
@@ -70,7 +72,7 @@ void BasicReceiverCollection::removeSensor(BasicReceiver& receiver)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (receiver == _receivers[i]) //May not work
+        if (receiver.getId() == _receivers[i]->getId())
             _receivers[i] = 0;
     }
 }
@@ -79,8 +81,7 @@ void BasicReceiverCollection::setUp()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicReceiver& receiver = _receivers[i];
-        receiver->setUp();
+        _receivers[i]->setUp();
     }
 }
 
@@ -88,8 +89,7 @@ void BasicReceiverCollection::refresh()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor& receiver = _receivers[i];
-        receiver->refresh();
+        _receivers[i]->refresh();
     }
 }
 
@@ -97,8 +97,7 @@ void BasicReceiverCollection::switchOn()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor& receiver = _receivers[i];
-        receiver->switchOn();
+        _receivers[i]->switchOn();
     }
 }
 
@@ -109,8 +108,7 @@ void BasicReceiverCollection::switchOff()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor* receiver = _receivers[i];
-        receiver->switchOff();
+        _receivers[i]->switchOff();
     }
 }
 
@@ -118,8 +116,7 @@ void BasicReceiverCollection::blink(int blinkPerMinute)
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor* receiver = _receivers[i];
-        receiver->blink(blinkPerMinute);
+        _receivers[i]->blink(blinkPerMinute);
     }
 }
 
@@ -127,7 +124,6 @@ void BasicReceiverCollection::blink(BasicDuration const& duration)
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor* receiver = _receivers[i];
-        receiver->blink(duration);
+        _receivers[i]->blink(duration);
     }
 }

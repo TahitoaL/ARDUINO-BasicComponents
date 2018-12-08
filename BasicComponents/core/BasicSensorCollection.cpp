@@ -46,8 +46,10 @@ BasicSensor* BasicSensorCollection::getSensor(char pin)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (pin == _sensors[i].pin)
-            return _sensors[i]
+        if (pin == _sensors[i]->getPin())
+        {
+            return _sensors[i];
+        }
     }
     return NULL;
 }
@@ -61,7 +63,7 @@ void BasicSensorCollection::removeSensor(char pin)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (pin == _sensors[i].pin)
+        if (pin == _sensors[i]->getPin())
             _sensors[i] = 0;
     }
 }
@@ -70,7 +72,7 @@ void BasicSensorCollection::removeSensor(BasicSensor& sensor)
 {
     for (int i = 0; i < _size; i++)
     {
-        if (sensor == _sensors[i]) //May not work
+        if (sensor.getId() == _sensors[i]->getId())
             _sensors[i] = 0;
     }
 }
@@ -79,8 +81,7 @@ void BasicSensorCollection::setUp()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor& sensor = _sensors[i];
-        sensor->setUp();
+        _sensors[i]->setUp();
     }
 }
 
@@ -88,7 +89,6 @@ void BasicSensorCollection::savePreviousData()
 {
     for (int i = 0; i < _size; i++)
     {
-        BasicSensor& sesor = _sensors[i];
-        sensor->savePreviousData();
+        _sensors[i]->savePreviousData();
     }
 }

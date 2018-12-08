@@ -10,8 +10,9 @@ class BasicReceiver {
     public:
         BasicReceiver(char pin, int id, String name);
         virtual void setUp();
-        String getName();
-        int getId();
+        const String getName();
+        const int getId();
+        const char getPin();
         virtual void switchOn() = 0;
         virtual void switchOn(BasicDuration const& duration) = 0;
         virtual void switchOff() = 0;
@@ -39,6 +40,7 @@ class DigitalReceiver : public BasicReceiver {
 
     public:
         DigitalReceiver(char pin, int id, String name);
+        virtual boolean getState();
         virtual void switchOn();
         virtual void switchOn(BasicDuration const& duration);
         virtual void switchOff();  
@@ -55,6 +57,7 @@ class PwmReceiver : public BasicReceiver {
         virtual boolean getState();
         virtual void switchOn();
         virtual void switchOn(BasicDuration const& duration);
+        virtual void switchOn(int blinkPerMinute);
         virtual void switchOff();
         void switchOn(int dutyCycleValue, boolean save = true);
         void setDutyCycleValue(int dutyCycleValue);
