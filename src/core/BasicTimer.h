@@ -5,13 +5,13 @@
 class BasicTimer {
 
     public:
-        BasicTimer(BasicDuration const& duration);
+        BasicTimer(int duration); //in milliseconds
         void init();
         bool timeIsUp();
-        BasicDuration& getDuration();
+        int getDuration();
 
     protected:
-        BasicDuration _duration;
+        int _duration;
         long _timeStart;
     
 };
