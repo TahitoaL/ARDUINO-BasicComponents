@@ -30,7 +30,7 @@ class BasicReceiver {
         boolean _state;
         boolean _blinkActivated;
         BasicTimer* _timer; //May not work
-        static const int PWM_PINS[6] = {3, 5, 6, 9, 10, 11};
+        static const int PWM_PINS[6] = {3, 5, 6, 9, 10, 11}; //Arduino UNO
 
 };
 

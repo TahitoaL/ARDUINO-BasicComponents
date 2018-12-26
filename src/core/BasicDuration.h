@@ -5,7 +5,10 @@
 class BasicDuration {
 
     public:
-        BasicDuration(int hours = 0, int minutes = 0, int seconds = 0, int milliseconds = 0);
+        BasicDuration();
+        BasicDuration(const BasicDuration& duration);
+        BasicDuration(int seconds, int milliseconds = 0);
+        BasicDuration(int minutes, int seconds, int milliseconds);
         BasicDuration& operator+=(BasicDuration const& duration);
         bool isEqual(BasicDuration const& b);
         bool isInferiorTo(BasicDuration const& b);
@@ -13,9 +16,8 @@ class BasicDuration {
         int getMinutes();
         int getSeconds();
         int getMilliseconds();
-        int getDurationTime(); //in milliseconds
+        long getDurationTime(); //in milliseconds
         void reset();
-        static const int MAX_HOURS = 72;
 
     protected:
         int _hours;

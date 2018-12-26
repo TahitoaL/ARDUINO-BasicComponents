@@ -1,9 +1,21 @@
 #include "Arduino.h"
 #include "./../BasicComponents.h"
+#include "./BasicDuration.h"
 
-BasicTimer::BasicTimer(int duration)
+BasicTimer::BasicTimer()
+{
+    // _duration = new BasicDuration(0);
+}
+
+void BasicTimer::setValue(BasicDuration const& duration)
 {
     _duration = duration;
+    _durationValue = duration.getDurationTime();
+}
+
+void BasicTimer::setValue(int seconds, int milliseconds = 0)
+{
+    _duration = new BasicDuration(seconds, milliseconds);
 }
 
 void BasicTimer::init()
@@ -11,9 +23,14 @@ void BasicTimer::init()
     _timeStart = millis();
 }
 
-bool BasicTimer::timeIsUp()
+long BasicTimer::getTime()
 {
-    if ((millis() - _timeStart) >= duration)
+    return (millis() - _timeStart);
+}
+
+boolean BasicTimer::timeIsUp()
+{
+    if (getTime()  > getDurationValue())
     {
         return true;
     }
@@ -23,6 +40,12 @@ bool BasicTimer::timeIsUp()
     }
 }
 
-int BasicTimer::getDuration()
+long BasicTimer::getDurationValue()
+{
+    return _durationValue;
+}
+
+BasicDuration& BasicTimer::getDuration()
 {
     return _duration;
+}

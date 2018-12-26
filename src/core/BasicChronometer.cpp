@@ -21,5 +21,5 @@ void BasicChronometer::stop()
 
 BasicDuration* BasicChronometer::getDurationSinceStart()
 {
-    return new BasicDuration(0, 0, 0, _durationSinceStart);
+    return new BasicDuration(0, _durationSinceStart);
 }

@@ -2,21 +2,6 @@
 
 #define BSI_H
 
-class SpeedSensor : public DigitalSensor {
-
-    public:
-        SpeedSensor(char pin, int id, String name, float wheelDiameter);
-        int readValue(boolean save = false);
-        float readRawValue(boolean save = false);
-        boolean isStop();
-
-    protected:
-        float _wheelDiameter;
-        boolean _stop;
-        BasicDuration _detectionDuration;
-
-};
-
 class ColorSensor : public BasicSensor {
 
     public:

@@ -1,31 +1,47 @@
 #include "Arduino.h"
 #include "./../BasicComponents.h"
 
-// /!\ Redondance
-
-BasicDuration::BasicDuration(int hours = 0, int minutes = 0, int seconds = 0, int milliseconds = 0)
+BasicDuration::BasicDuration()
 {
-    _hours = hours;
+    _milliseconds = 0;
+    _seconds = 0;
+    _minutes = 0;
+    _hours = 0;
+}
+
+BasicDuration::BasicDuration(const BasicDuration& duration)
+{
+    _milliseconds = duration._milliseconds;
+    _seconds = duration._seconds;
+    _minutes = duration._minutes;
+    _hours = duration._hours;
+}
+
+BasicDuration::BasicDuration(int seconds, int milliseconds = 0)
+{
+    _seconds = seconds;
+    _milliseconds = milliseconds;
+
+    _seconds += _milliseconds / 1000;
+    _milliseconds %= 1000;
+    _minutes += _seconds / 60;
+    _seconds %= 60;
+    _hours += _minutes / 60;
+    _minutes %= 60;
+}
+
+BasicDuration::BasicDuration(int minutes, int seconds, int milliseconds)
+{
     _minutes = minutes;
     _seconds = seconds;
     _milliseconds = milliseconds;
 
     _seconds += _milliseconds / 1000;
     _milliseconds %= 1000;
-    
     _minutes += _seconds / 60;
     _seconds %= 60;
-
     _hours += _minutes / 60;
     _minutes %= 60;
-
-    if (_hours > MAX_HOURS)
-    {
-        _milliseconds = 0;
-        _seconds = 0;
-        _minutes = 0;
-        _hours = 0;
-    }
 }
 
 BasicDuration& BasicDuration::operator+=(BasicDuration const& duration)
@@ -43,14 +59,6 @@ BasicDuration& BasicDuration::operator+=(BasicDuration const& duration)
     _minutes %= 60;
 
     _hours += duration._hours;
-
-    if (_hours > MAX_HOURS)
-    {
-        _milliseconds = 0;
-        _seconds = 0;
-        _minutes = 0;
-        _hours = 0;
-    }
 
     return *this;
 }
@@ -97,7 +105,7 @@ int BasicDuration::getMilliseconds()
     return _milliseconds;
 }
 
-int BasicDuration::getDurationTime()
+long BasicDuration::getDurationTime()
 {
     return (((_hours * 60 + _minutes) * 60 + _seconds) * 1000 + _milliseconds);
 }
@@ -118,6 +126,14 @@ BasicDuration operator+(BasicDuration& a, BasicDuration& b)
 {
     BasicDuration results(a);
     results += b;
+    return results;
+}
+
+BasicDuration operator+(BasicDuration& a, int b)
+{
+    BasicDuration results(a);
+    BasicDuration toAdd(b);
+    results += toAdd;
     return results;
 }
 

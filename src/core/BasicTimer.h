@@ -1,3 +1,4 @@
+#include "./BasicDuration.h"
 #ifndef BT_H
 
 #define BT_H
@@ -5,13 +6,18 @@
 class BasicTimer {
 
     public:
-        BasicTimer(int duration); //in milliseconds
+        BasicTimer();
+        void setValue(BasicDuration const& duration);
+        void setValue(int seconds, int milliseconds = 0);
         void init();
-        bool timeIsUp();
-        int getDuration();
+        boolean timeIsUp();
+        long getTime();
+        long getDurationValue();
+        BasicDuration& getDuration();
 
     protected:
-        int _duration;
+        BasicDuration& _duration;
+        long _durationValue;
         long _timeStart;
     
 };
