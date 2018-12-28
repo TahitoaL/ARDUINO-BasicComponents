@@ -8,7 +8,7 @@ class BasicChronometer {
         BasicChronometer();
         void start();
         void stop();
-        void init();
+        // void init();
         BasicDuration* getDurationSinceStart();
 
     protected:

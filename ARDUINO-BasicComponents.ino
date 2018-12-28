@@ -3,6 +3,7 @@
 
 BasicTimer timer1;
 BasicDuration time1(4);
+ColorSensor color1(8, 4, 5, 6, 7, 9, 0, "ColorSensor");
 
 void setup()
 {
@@ -10,18 +11,13 @@ void setup()
     Serial.println("Lancement");
     timer1.setValue(time1);
     timer1.init();
-    Serial.println(timer1.getDuration().getDurationTime());
-    Serial.println(timer1.getTime());
-    Serial.println(timer1.getDurationValue());
+    color1.setUp();
 }
 
 void loop()
 {
-    if (timer1.timeIsUp())
-    {
-        Serial.println("Une boucle a ete faite");
-        timer1.init();
-    }
-    // Serial.println(timer1.getTime());
-    // Serial.println(timer1.timeIsUp());
+    color1.switchOnLed();
+    delay(2000);
+    color1.switchOffLed();
+    delay(2000);
 }
