@@ -60,7 +60,8 @@ ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, cha
     _id = id;
     _name = name;
 
-    _colorGapMax = 80;
+    _colorGapMax = 100000;
+    _colorGapHysteresis = 25000;
 }
 
 void ColorSensor::setUp()
@@ -175,7 +176,7 @@ int ColorSensor::getValue()
 
 boolean ColorSensor::readState()
 {
-    _colorGap = abs(_referenceRed - _averageRed)*3 + abs(_referenceGreen - _averageGreen)*3 + abs(_referenceBlue - _averageBlue)*3;
+    _colorGap = abs(_referenceRed - _averageRed)*abs(_referenceRed - _averageRed) + abs(_referenceGreen - _averageGreen)*abs(_referenceGreen - _averageGreen) + abs(_referenceBlue - _averageBlue)*abs(_referenceBlue - _averageBlue);
 
     if(!_lineDetected && _colorGap < (_colorGapMax - _colorGapHysteresis))
     {
