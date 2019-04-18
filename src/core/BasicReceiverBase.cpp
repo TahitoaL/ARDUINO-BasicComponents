@@ -32,16 +32,17 @@ const char BasicReceiver::getPin()
 
 void BasicReceiver::blink(int blinkPerMinute)
 {
-    _timer = new BasicTimer();
-    _timer->setValue(new BasicDuration(60 / (2 * blinkPerMinute)));
+    int timerDuration = (60 / (2 * blinkPerMinute));
+    _timer = new BasicTimer(timerDuration);
+    // _timer->setValue(new BasicDuration()));
     _timer->init();
     _blinkActivated = true;
 }
 
 void BasicReceiver::blink(BasicDuration const& blinkDuration)
 {
-    _timer = new BasicTimer();
-    _timer->setValue(blinkDuration);
+    _timer = new BasicTimer(blinkDuration.getSeconds(), blinkDuration.getMilliseconds());
+    // _timer->setValue(blinkDuration);
     _timer->init();
     _blinkActivated = true;
 }

@@ -6,17 +6,15 @@
 class BasicTimer {
 
     public:
-        BasicTimer();
-        void setValue(BasicDuration const& duration);
-        void setValue(int seconds, int milliseconds = 0);
+        BasicTimer(int seconds, int milliseconds = 0);
+        BasicTimer(BasicDuration const& duration);
         void init();
         boolean timeIsUp();
         long getTime();
         long getDurationValue();
-        BasicDuration& getDuration();
 
     protected:
-        BasicDuration& _duration;
+        long _milliseconds;
         long _durationValue;
         long _timeStart;
     

@@ -2,20 +2,14 @@
 #include "./../BasicComponents.h"
 #include "./BasicDuration.h"
 
-BasicTimer::BasicTimer()
+BasicTimer::BasicTimer(int seconds, int milliseconds = 0)
 {
-    // _duration = new BasicDuration(0);
+    _milliseconds = 1000 * seconds + milliseconds;
 }
 
-void BasicTimer::setValue(BasicDuration const& duration)
+BasicTimer::BasicTimer(BasicDuration const& duration)
 {
-    _duration = duration;
-    _durationValue = duration.getDurationTime();
-}
-
-void BasicTimer::setValue(int seconds, int milliseconds = 0)
-{
-    _duration = new BasicDuration(seconds, milliseconds);
+    _milliseconds = duration.getDurationTime();
 }
 
 void BasicTimer::init()
@@ -30,7 +24,7 @@ long BasicTimer::getTime()
 
 boolean BasicTimer::timeIsUp()
 {
-    if (getTime()  > getDurationValue())
+    if (getTime()  > _milliseconds)
     {
         return true;
     }
@@ -38,14 +32,10 @@ boolean BasicTimer::timeIsUp()
     {
         return false;
     }
+
 }
 
 long BasicTimer::getDurationValue()
 {
-    return _durationValue;
-}
-
-BasicDuration& BasicTimer::getDuration()
-{
-    return _duration;
+    return _milliseconds;
 }
