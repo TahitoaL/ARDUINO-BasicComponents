@@ -1,6 +1,53 @@
 #include "Arduino.h"
+#include "Streaming.h"
 #include "./../BasicComponents.h"
 #include <Array.h>
+
+Color::Color(int red, int green, int blue, String name)
+{
+    _colors[0] = red;
+    _colors[1] = green;
+    _colors[2] = blue;
+    _name = name;
+}
+
+void Color::setColor(int red, int green, int blue)
+{
+    _colors[0] = red;
+    _colors[1] = green;
+    _colors[2] = blue;
+}
+
+String Color::display()
+{
+    return "rgb(" + String(_colors[0]) + "," + String(_colors[1]) + "," + String(_colors[2]) + ")";
+}
+
+int Color::getRed()
+{
+    return _colors[0];
+}
+
+int Color::getGreen()
+{
+    return _colors[1];
+}
+
+int Color::getBlue()
+{
+    return _colors[2];
+}
+
+String Color::getName()
+{
+    return _name;
+}
+
+int Color::compare(Color color)
+{
+    // return (abs(_colors[0] - color.getRed())^2) + (abs(_colors[1] - color.getGreen())^2) + (abs(_colors[2] - color.getBlue()));
+    return abs(color.getRed() - _colors[0])*3 + abs(color.getGreen() - _colors[1])*3 + abs(color.getBlue() - _colors[2])*3;
+}
 
 ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, char s3Pin, char ledPin, int id, String name) : BasicSensor(outputPin, id, name)
 {
@@ -12,11 +59,13 @@ ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, cha
     _ledPin = ledPin;
     _id = id;
     _name = name;
+
+    _colorGapMax = 80;
 }
 
 void ColorSensor::setUp()
 {
-    pinMode(_outputPin, OUTPUT);
+    pinMode(_outputPin, INPUT);
     pinMode(_s0Pin, OUTPUT);
     pinMode(_s1Pin, OUTPUT);
     pinMode(_s2Pin, OUTPUT);
@@ -26,18 +75,14 @@ void ColorSensor::setUp()
     digitalWrite(_s0Pin, HIGH);
     digitalWrite(_s1Pin, HIGH);
 
-    _timerBeforeReadColor = new BasicTimer;
-    _timerBeforeReadColor->setValue(new BasicDuration(0, 20));
-
     _lineDetected = false;
 
-    for(int i = 0; i < 3; i++)
-    {
-        _colors[i] = 0;
-        _rawColors[i] = 0;
-    }
-
-    _colorDetected = 0;
+    _Red_1 = 0;
+    _Green_1 = 0;
+    _Blue_1 = 0;
+    _Red_2 = 0;
+    _Green_2 = 0;
+    _Blue_2 = 0;
 }
 
 void ColorSensor::switchOnLed()
@@ -50,99 +95,97 @@ void ColorSensor::switchOffLed()
     digitalWrite(_ledPin, LOW);
 }
 
-int ColorSensor::readRawColor(int rgbSelector) //0 => Red ; 1 => Green, 2 => Blue
+void ColorSensor::setReferenceColor(int red, int green, int blue)
 {
-    switch (rgbSelector) {
-        case 0:
-            if (_timerBeforeReadColor->timeIsUp())
-            {
-                digitalWrite(_s2Pin, LOW);
-                digitalWrite(_s3Pin, LOW);
-                _rawRed = pulseIn(_outputPin, LOW);
-                _timerBeforeReadColor->init();
-            }
-            else
-            {
-                _rawRed = -1;
-            }
-            return _rawRed;
-            break;
-        case 1:
-            if (_timerBeforeReadColor->timeIsUp())
-            {
-                digitalWrite(_s2Pin, HIGH);
-                digitalWrite(_s3Pin, HIGH);
-                _rawGreen = pulseIn(_outputPin, LOW);
-                _timerBeforeReadColor->init();
-            }
-            else
-            {
-                _rawGreen = -1;
-            }
-            return _rawGreen;
-            break;
-        case 2:
-            if (_timerBeforeReadColor->timeIsUp())
-            {
-                digitalWrite(_s2Pin, LOW);
-                digitalWrite(_s3Pin, HIGH);
-                _rawBlue = pulseIn(_outputPin, LOW);
-                _timerBeforeReadColor->init();
-            }
-            else
-            {
-                _rawBlue = -1;
-            }
-            return _rawBlue;
-            break;
-    }
+    _referenceRed = red;
+    _referenceGreen = green;
+    _referenceBlue = blue;
 }
 
-int ColorSensor::readColor(int rgbSelector)
-{}
-
-Array<int, 3> ColorSensor::readRawColors()
+void ColorSensor::readRawColor() //0 => Red ; 1 => Green, 2 => Blue
 {
-    for (int i = 0; i < 3; i++)
+    digitalWrite(_s2Pin, LOW);
+    digitalWrite(_s3Pin, LOW);
+    _rawRed = pulseIn(_outputPin, LOW);
+    delay(5);
+
+    digitalWrite(_s2Pin, HIGH);
+    digitalWrite(_s3Pin, HIGH);
+    _rawGreen = pulseIn(_outputPin, LOW);
+    delay(5);
+
+    digitalWrite(_s2Pin, LOW);
+    digitalWrite(_s3Pin, HIGH);
+    _rawBlue = pulseIn(_outputPin, LOW);
+}
+
+void ColorSensor::readColor()
+{
+    readRawColor();
+
+    //redressement des valeurs
+    _Red = map(_rawRed, 25, 72, 255, 0);
+    _Green = map(_rawGreen, 30, 90, 255, 0);
+    _Blue = map(_rawBlue, 25, 70, 255, 0);
+
+    _max = max(_Red, max(_Green, _Blue));
+    _min = min(_Red, min(_Green, _Blue));
+    
+    if (_max - _min < 100)
     {
-        _rawColors[i] = readRawColor(i);
-        delay(25);
+        _max = _max + (_max - _min) / 2;
+        _min = _min - (_max - _min) / 2;
     }
-    return _rawColors;
-}
 
-Array<int, 3> ColorSensor::getRawColors()
-{
-    return _rawColors;
-}
+    _Red_0 = map(_Red, _min, _max, 0, 255);
+    _Green_0 = map(_Green, _min, _max, 0, 255);
+    _Blue_0 = map(_Blue, _min, _max, 0, 255);
 
-Array<int, 3> ColorSensor::readColors()
-{
-    for (int i = 0; i < 3; i++)
+    _Red_1 = _Red_0;
+    _Green_1 = _Green_0;
+    _Blue_1 = _Blue_0;
+    _Red_2 = _Red_1;
+    _Green_2 = _Green_1;
+    _Blue_2 = _Blue_1;
+
+    if (_max <= 20)
     {
-        _colors[i] = readColor(i);
-        delay(25);
+        _max = 20;
     }
-    return _colors;
+
+    _averageRed = (_Red_0 + _Red_1 + _Red_2) / 3;
+    _averageGreen = (_Green_0 + _Green_1 + _Green_2) / 3;
+    _averageBlue = (_Blue_0 + _Blue_1 + _Blue_2) / 3;
 }
 
-Array<int, 3> ColorSensor::getColors()
-{
-    return _colors;
-}
+// Color ColorSensor::getColor()
+// {
+//     return Color(_averageRed, _averageGreen, _averageBlue, "Detected Color");
+// }
 
 int ColorSensor::readValue()
 {
-    return _colorDetected;
+    return readState() ? 1 : 0;
 }
 
 int ColorSensor::getValue()
 {
-    return _colorDetected;
+    return _lineDetected ? 1 : 0;
 }
 
 boolean ColorSensor::readState()
 {
+    _colorGap = abs(_referenceRed - _averageRed)*3 + abs(_referenceGreen - _averageGreen)*3 + abs(_referenceBlue - _averageBlue)*3;
+
+    if(!_lineDetected && _colorGap < (_colorGapMax - _colorGapHysteresis))
+    {
+        _lineDetected = true;
+    }
+    if(_lineDetected && _colorGap > (_colorGapMax + _colorGapHysteresis))
+    {
+        _lineDetected = false;
+    }
+
     return _lineDetected;
 }
 

@@ -4,6 +4,21 @@
 
 #define BSI_H
 
+class Color {
+    public:
+        Color(int red, int green, int blue, String name);
+        void setColor(int red, int green, int blue);
+        int getRed();
+        int getGreen();
+        int getBlue();
+        String getName();
+        String display();
+        int compare(Color color);
+    protected:
+        int _colors[3];
+        String _name;
+};
+
 class ColorSensor : public BasicSensor {
 
     public:
@@ -11,13 +26,11 @@ class ColorSensor : public BasicSensor {
         virtual void setUp();
         void switchOnLed();
         void switchOffLed();
-        int readRawColor(int rgbSelector);
-        int readColor(int rgbSelector);
-        Array<int, 3> readRawColors();
-        Array<int, 3> getRawColors();
-        Array<int, 3> readColors();
-        Array<int, 3> getColors();
-        virtual int readValue(); //return an int that correspond to the id of the detected color
+        void setReferenceColor(int red, int green, int blue);
+        void readRawColor();
+        void readColor();
+        // Color getColor();
+        virtual int readValue(); //return 0 or 1
         virtual int getValue();
         virtual boolean readState(); // = lineDetected()
         virtual boolean getState();
@@ -30,15 +43,35 @@ class ColorSensor : public BasicSensor {
         char _s1Pin;
         char _s2Pin;
         char _ledPin;
-        BasicTimer* _timerBeforeReadColor;
+        int _referenceRed;
+        int _referenceGreen;
+        int _referenceBlue;
         int _rawRed;
         int _rawGreen;
         int _rawBlue;
-        Array<int, 3> _rawColors;
-        Array<int, 3> _colors;
-        int _colorDetected;
-        boolean _lineDetected;
+        int _Red;
+        int _Green;
+        int _Blue;
+        int _Red_0;
+        int _Green_0;
+        int _Blue_0;
+        int _Red_1;
+        int _Green_1;
+        int _Blue_1;
+        int _Red_2;
+        int _Green_2;
+        int _Blue_2;
+        int _averageRed;
+        int _averageGreen;
+        int _averageBlue;
+        int _min;
+        int _max;
 
+        int _colorGap;
+        int _colorGapMax;
+        int _colorGapHysteresis;
+
+        boolean _lineDetected;
 };
 
 #endif
