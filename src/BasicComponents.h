@@ -11,5 +11,6 @@
 #include "./core/BasicSensorCollection.h"
 #include "./core/BasicReceiverCollection.h"
 #include "./core/BasicSensorImplementation.h"
+#include "./core/BasicReceiverImplementation.h"
 
 #endif

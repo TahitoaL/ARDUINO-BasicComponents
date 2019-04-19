@@ -121,7 +121,7 @@ boolean PwmReceiver::getState()
 
 void PwmReceiver::switchOn()
 {
-    analogWrite(_pin, map(_dutyCycleValue, 0, 100, 0, 255));
+    analogWrite(_pin, _dutyCycleValue);
 }
 
 void PwmReceiver::switchOn(BasicDuration const& duration)
@@ -142,7 +142,7 @@ void PwmReceiver::switchOn(int dutyCycleValue)
 
 void PwmReceiver::setDutyCycleValue(int dutyCycleValue)
 {
-    if (dutyCycleValue <= 100)
+    if (dutyCycleValue <= 255 && dutyCycleValue >= 0)
     {
         _dutyCycleValue = dutyCycleValue;
         switchOn();
