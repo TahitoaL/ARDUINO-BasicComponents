@@ -15,7 +15,6 @@ class BasicTimer {
 
     protected:
         long _milliseconds;
-        long _durationValue;
         long _timeStart;
     
 };
