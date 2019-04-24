@@ -5,9 +5,6 @@ __Author :__ Tahitoa L
 
 __Maintainer :__ Tahitoa L
 
-<<<<<<< master
-## Features
-=======
 ## Components
 * BasicSensor
 * DigitalSensor
@@ -22,4 +19,3 @@ __Maintainer :__ Tahitoa L
 * BasicDuration
 * BasicTimer
 * BasicChronometer
->>>>>>> gitflow-feature-stash: ChangeBasicMotorWorking
