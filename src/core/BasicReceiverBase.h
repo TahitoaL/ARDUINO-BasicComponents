@@ -3,7 +3,7 @@
 
 #ifndef BRB_H
 
-#define RBR_H
+#define BRB_H
 
 class BasicReceiver {
 
