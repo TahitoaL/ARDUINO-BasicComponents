@@ -6,7 +6,7 @@
 BasicTimer timer1(0, 100);
 BasicTimer timer2(2, 500);
 ColorSensor color1(36, 28, 30, 32, 34, 26, 0, "FrontRightColorSensor");
-BasicMotor motor1(11, 1, "RunBotMotor");
+BasicMotor motor1(11, 1, "RunBotMotor", 20);
 BasicTimer timerSpeed(0, 500);
 DigitalSensor speedMagnet(10, false, 2, "SpeedMagnet"); // Vérifier PIN & PULLUP
 
