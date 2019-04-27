@@ -9,11 +9,20 @@ BasicMotor::BasicMotor(char pin, int id, String name, int minPwm = 0, int mawPwm
     _maxPwm = maxPwm;
 }
 
-void BasicMotor::setSpeed(int speed) // form 0 to 100
+void BasicMotor::setSpeed(int speed) // from 0 to 100
 {
     _speed = speed;
-    Serial << _name << " : " << _dutyCycleValue << endl;
-    setDutyCycleValue(map(_speed, 0, 100, _minPwm, _maxPwm));
+    if (speed == 0) //Stop Motor
+    {
+        Serial << _name << " : " << 0 << endl;
+        setDutyCycleValue();
+    }
+    else
+    {
+        name << " : " << _dutyCycleValue << endl;
+        setDutyCycle(map(_speed, 0, 100, _minPwm, _maxPwm))
+    }
+    
 }
 
 int BasicMotor::getSpeed()
