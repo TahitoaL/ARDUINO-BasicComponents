@@ -29,7 +29,9 @@ class ColorSensor : public BasicSensor {
         void setReferenceColor(int red, int green, int blue);
         void readRawColor();
         void readColor();
-        // Color getColor();
+        int getRed();
+        int getGreen();
+        int getBlue();
         virtual int readValue(); //return 0 or 1
         virtual int getValue();
         virtual boolean readState(); // = lineDetected()

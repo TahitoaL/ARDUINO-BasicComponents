@@ -159,10 +159,20 @@ void ColorSensor::readColor()
     _averageBlue = (_Blue_0 + _Blue_1 + _Blue_2) / 3;
 }
 
-// Color ColorSensor::getColor()
-// {
-//     return Color(_averageRed, _averageGreen, _averageBlue, "Detected Color");
-// }
+int ColorSensor::getRed()
+{
+    return _averageRed;
+}
+
+int ColorSensor::getGreen()
+{
+    return _averageGreen;
+}
+
+int ColorSensor::getBlue()
+{
+    return _averageBlue;
+}
 
 int ColorSensor::readValue()
 {
