@@ -32,6 +32,7 @@ class ColorSensor : public BasicSensor {
         int getRed();
         int getGreen();
         int getBlue();
+        int getGap();
         virtual int readValue(); //return 0 or 1
         virtual int getValue();
         virtual boolean readState(); // = lineDetected()

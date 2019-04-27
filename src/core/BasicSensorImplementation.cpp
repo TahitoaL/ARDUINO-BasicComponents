@@ -108,16 +108,17 @@ void ColorSensor::readRawColor() //0 => Red ; 1 => Green, 2 => Blue
     digitalWrite(_s2Pin, LOW);
     digitalWrite(_s3Pin, LOW);
     _rawRed = pulseIn(_outputPin, LOW);
-    delay(5);
+    delay(10);
 
     digitalWrite(_s2Pin, HIGH);
     digitalWrite(_s3Pin, HIGH);
     _rawGreen = pulseIn(_outputPin, LOW);
-    delay(5);
+    delay(10);
 
     digitalWrite(_s2Pin, LOW);
     digitalWrite(_s3Pin, HIGH);
     _rawBlue = pulseIn(_outputPin, LOW);
+    delay(10);
 }
 
 void ColorSensor::readColor()
@@ -172,6 +173,11 @@ int ColorSensor::getGreen()
 int ColorSensor::getBlue()
 {
     return _averageBlue;
+}
+
+int ColorSensor::getGap()
+{
+    return _colorGap;
 }
 
 int ColorSensor::readValue()
