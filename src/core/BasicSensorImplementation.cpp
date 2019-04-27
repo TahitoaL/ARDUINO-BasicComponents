@@ -60,8 +60,8 @@ ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, cha
     _id = id;
     _name = name;
 
-    _colorGapMax = 100000;
-    _colorGapHysteresis = 25000;
+    _colorGapMax = 10000;
+    _colorGapHysteresis = 5000;
 }
 
 void ColorSensor::setUp()
@@ -74,7 +74,7 @@ void ColorSensor::setUp()
     pinMode(_ledPin, OUTPUT);
 
     digitalWrite(_s0Pin, HIGH);
-    digitalWrite(_s1Pin, HIGH);
+    digitalWrite(_s1Pin, LOW);
 
     _lineDetected = false;
 
