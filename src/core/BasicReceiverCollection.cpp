@@ -1,6 +1,12 @@
 #include "Arduino.h"
 #include "./../BasicComponents.h"
 
+/**
+ * @brief Construct a new Basic Receiver Collection:: Basic Receiver Collection object
+ * 
+ * @param id 
+ * @param name 
+ */
 BasicReceiverCollection::BasicReceiverCollection(int id, String name)
 {
     _id = id;

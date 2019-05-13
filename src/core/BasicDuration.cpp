@@ -1,6 +1,10 @@
 #include "Arduino.h"
 #include "./../BasicComponents.h"
 
+/**
+ * @brief Construct a new Basic Duration:: Basic Duration object
+ * 
+ */
 BasicDuration::BasicDuration()
 {
     _milliseconds = 0;
@@ -9,6 +13,11 @@ BasicDuration::BasicDuration()
     _hours = 0;
 }
 
+/**
+ * @brief Construct a new Basic Duration:: Basic Duration object
+ * 
+ * @param duration 
+ */
 BasicDuration::BasicDuration(const BasicDuration& duration)
 {
     _milliseconds = duration._milliseconds;
@@ -17,6 +26,12 @@ BasicDuration::BasicDuration(const BasicDuration& duration)
     _hours = duration._hours;
 }
 
+/**
+ * @brief Construct a new Basic Duration:: Basic Duration object
+ * 
+ * @param seconds 
+ * @param milliseconds 
+ */
 BasicDuration::BasicDuration(int seconds, int milliseconds = 0)
 {
     _seconds = seconds;
@@ -30,6 +45,13 @@ BasicDuration::BasicDuration(int seconds, int milliseconds = 0)
     _minutes %= 60;
 }
 
+/**
+ * @brief Construct a new Basic Duration:: Basic Duration object
+ * 
+ * @param minutes 
+ * @param seconds 
+ * @param milliseconds 
+ */
 BasicDuration::BasicDuration(int minutes, int seconds, int milliseconds)
 {
     _minutes = minutes;
@@ -44,6 +66,12 @@ BasicDuration::BasicDuration(int minutes, int seconds, int milliseconds)
     _minutes %= 60;
 }
 
+/**
+ * @brief 
+ * 
+ * @param duration 
+ * @return BasicDuration& 
+ */
 BasicDuration& BasicDuration::operator+=(BasicDuration const& duration)
 {
     _milliseconds += duration._milliseconds;
@@ -63,6 +91,13 @@ BasicDuration& BasicDuration::operator+=(BasicDuration const& duration)
     return *this;
 }
 
+/**
+ * @brief 
+ * 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool BasicDuration::isEqual(BasicDuration const& b)
 {
     if (_hours == b._hours && _minutes == b._minutes && _seconds == b._seconds && _milliseconds == b._milliseconds)
@@ -71,6 +106,13 @@ bool BasicDuration::isEqual(BasicDuration const& b)
         return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool BasicDuration::isInferiorTo(BasicDuration const& b)
 {
     if (_hours < b._hours)
@@ -85,31 +127,60 @@ bool BasicDuration::isInferiorTo(BasicDuration const& b)
         return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int BasicDuration::getHours()
 {
     return _hours;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int BasicDuration::getMinutes()
 {
     return _minutes;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int BasicDuration::getSeconds()
 {
     return _seconds;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int BasicDuration::getMilliseconds()
 {
     return _milliseconds;
 }
 
+/**
+ * @brief 
+ * 
+ * @return long 
+ */
 long BasicDuration::getDurationTime()
 {
     return (((_hours * 60 + _minutes) * 60 + _seconds) * 1000 + _milliseconds);
 }
 
+/**
+ * @brief 
+ * 
+ */
 void BasicDuration::reset()
 {
     _milliseconds = 0;
@@ -122,6 +193,13 @@ void BasicDuration::reset()
         OPERATORS
 \*---------------------*/
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return BasicDuration 
+ */
 BasicDuration operator+(BasicDuration& a, BasicDuration& b)
 {
     BasicDuration results(a);
@@ -129,6 +207,13 @@ BasicDuration operator+(BasicDuration& a, BasicDuration& b)
     return results;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return BasicDuration 
+ */
 BasicDuration operator+(BasicDuration& a, int b)
 {
     BasicDuration results(a);
@@ -137,11 +222,27 @@ BasicDuration operator+(BasicDuration& a, int b)
     return results;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool operator==(BasicDuration& a, BasicDuration& b)
 {
     return a.isEqual(b);
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool operator!=(BasicDuration& a, BasicDuration& b)
 {
     if (a == b)
@@ -150,6 +251,14 @@ bool operator!=(BasicDuration& a, BasicDuration& b)
         return true;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool operator<(BasicDuration& a, BasicDuration& b)
 {
     if (a.isInferiorTo(b))
@@ -158,6 +267,14 @@ bool operator<(BasicDuration& a, BasicDuration& b)
         return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ * @return true 
+ * @return false 
+ */
 bool operator>(BasicDuration& a, BasicDuration& b)
 {
     if (a.isInferiorTo(b))
