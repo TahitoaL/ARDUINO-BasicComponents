@@ -3,6 +3,14 @@
 #include "./../BasicComponents.h"
 #include <Array.h>
 
+/**
+ * @brief Construct a new Color:: Color object
+ * 
+ * @param red 
+ * @param green 
+ * @param blue 
+ * @param name 
+ */
 Color::Color(int red, int green, int blue, String name)
 {
     _colors[0] = red;
@@ -11,6 +19,13 @@ Color::Color(int red, int green, int blue, String name)
     _name = name;
 }
 
+/**
+ * @brief set the RGB values
+ * 
+ * @param red 
+ * @param green 
+ * @param blue 
+ */
 void Color::setColor(int red, int green, int blue)
 {
     _colors[0] = red;
@@ -18,37 +33,80 @@ void Color::setColor(int red, int green, int blue)
     _colors[2] = blue;
 }
 
+/**
+ * @brief return a string with the color in a rgb format
+ * 
+ * @return String 
+ */
 String Color::display()
 {
     return "rgb(" + String(_colors[0]) + "," + String(_colors[1]) + "," + String(_colors[2]) + ")";
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int Color::getRed()
 {
     return _colors[0];
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int Color::getGreen()
 {
     return _colors[1];
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int Color::getBlue()
 {
     return _colors[2];
 }
 
+/**
+ * @brief 
+ * 
+ * @return String 
+ */
 String Color::getName()
 {
     return _name;
 }
 
+/**
+ * @brief 
+ * 
+ * @param color 
+ * @return int 
+ */
 int Color::compare(Color color)
 {
     // return (abs(_colors[0] - color.getRed())^2) + (abs(_colors[1] - color.getGreen())^2) + (abs(_colors[2] - color.getBlue()));
     return abs(color.getRed() - _colors[0])*3 + abs(color.getGreen() - _colors[1])*3 + abs(color.getBlue() - _colors[2])*3;
 }
 
+/**
+ * @brief Construct a new Color Sensor:: Color Sensor object
+ * 
+ * @param outputPin 
+ * @param s0Pin 
+ * @param s1Pin 
+ * @param s2Pin 
+ * @param s3Pin 
+ * @param ledPin 
+ * @param id 
+ * @param name 
+ */
 ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, char s3Pin, char ledPin, int id, String name) : BasicSensor(outputPin, id, name)
 {
     _outputPin = outputPin;
@@ -64,6 +122,10 @@ ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, cha
     _colorGapHysteresis = 5000;
 }
 
+/**
+ * @brief set up all the pin in the Arduino script
+ * 
+ */
 void ColorSensor::setUp()
 {
     pinMode(_outputPin, INPUT);
@@ -86,16 +148,31 @@ void ColorSensor::setUp()
     _Blue_2 = 0;
 }
 
+/**
+ * @brief switch on the led of the color sensor
+ * 
+ */
 void ColorSensor::switchOnLed()
 {
     digitalWrite(_ledPin, HIGH);
 }
 
+/**
+ * @brief switch off the led of the color sensor
+ * 
+ */
 void ColorSensor::switchOffLed()
 {
     digitalWrite(_ledPin, LOW);
 }
 
+/**
+ * @brief set the reference color of the sensor. It will be used to determine whether the color detected by sensor almost coresponding to this one.
+ * 
+ * @param red 
+ * @param green 
+ * @param blue 
+ */
 void ColorSensor::setReferenceColor(int red, int green, int blue)
 {
     _referenceRed = red;
@@ -103,6 +180,10 @@ void ColorSensor::setReferenceColor(int red, int green, int blue)
     _referenceBlue = blue;
 }
 
+/**
+ * @brief read the value directly from the data provided by the sensor
+ * 
+ */
 void ColorSensor::readRawColor() //0 => Red ; 1 => Green, 2 => Blue
 {
     digitalWrite(_s2Pin, LOW);
@@ -121,6 +202,10 @@ void ColorSensor::readRawColor() //0 => Red ; 1 => Green, 2 => Blue
     delay(10);
 }
 
+/**
+ * @brief read the rgb values detected by the sensor
+ * 
+ */
 void ColorSensor::readColor()
 {
     readRawColor();
@@ -180,16 +265,31 @@ int ColorSensor::getGap()
     return _colorGap;
 }
 
+/**
+ * @brief return whether the reference color is detected
+ * 
+ * @return int 
+ */
 int ColorSensor::readValue()
 {
     return readState() ? 1 : 0;
 }
 
+/**
+ * @brief get the last value (WITHOUT reading it)
+ * 
+ * @return int 
+ */
 int ColorSensor::getValue()
 {
     return _lineDetected ? 1 : 0;
 }
 
+/**
+ * @brief return whether the reference color is detected
+ * 
+ * @return boolean 
+ */
 boolean ColorSensor::readState()
 {
     _colorGap = abs(_referenceRed - _averageRed)*abs(_referenceRed - _averageRed) + abs(_referenceGreen - _averageGreen)*abs(_referenceGreen - _averageGreen) + abs(_referenceBlue - _averageBlue)*abs(_referenceBlue - _averageBlue);
@@ -206,6 +306,11 @@ boolean ColorSensor::readState()
     return _lineDetected;
 }
 
+/**
+ * @brief get the last state (WITHOUT reading it)
+ * 
+ * @return boolean 
+ */
 boolean ColorSensor::getState()
 {
     return _lineDetected;
