@@ -120,8 +120,8 @@ ColorSensor::ColorSensor(char outputPin, char s0Pin, char s1Pin, char s2Pin, cha
     _id = id;
     _name = name;
 
-    _colorGapMax = 100000;
-    _colorGapHysteresis = 25000;
+    _colorGapMax = 10000;
+    _colorGapHysteresis = 5000;
 }
 
 /**
@@ -138,7 +138,7 @@ void ColorSensor::setUp()
     pinMode(_ledPin, OUTPUT);
 
     digitalWrite(_s0Pin, HIGH);
-    digitalWrite(_s1Pin, HIGH);
+    digitalWrite(_s1Pin, LOW);
 
     _lineDetected = false;
 
@@ -191,16 +191,17 @@ void ColorSensor::readRawColor() //0 => Red ; 1 => Green, 2 => Blue
     digitalWrite(_s2Pin, LOW);
     digitalWrite(_s3Pin, LOW);
     _rawRed = pulseIn(_outputPin, LOW);
-    delay(5);
+    delay(10);
 
     digitalWrite(_s2Pin, HIGH);
     digitalWrite(_s3Pin, HIGH);
     _rawGreen = pulseIn(_outputPin, LOW);
-    delay(5);
+    delay(10);
 
     digitalWrite(_s2Pin, LOW);
     digitalWrite(_s3Pin, HIGH);
     _rawBlue = pulseIn(_outputPin, LOW);
+    delay(10);
 }
 
 /**
@@ -246,10 +247,25 @@ void ColorSensor::readColor()
     _averageBlue = (_Blue_0 + _Blue_1 + _Blue_2) / 3;
 }
 
-// Color ColorSensor::getColor()
-// {
-//     return Color(_averageRed, _averageGreen, _averageBlue, "Detected Color");
-// }
+int ColorSensor::getRed()
+{
+    return _averageRed;
+}
+
+int ColorSensor::getGreen()
+{
+    return _averageGreen;
+}
+
+int ColorSensor::getBlue()
+{
+    return _averageBlue;
+}
+
+int ColorSensor::getGap()
+{
+    return _colorGap;
+}
 
 /**
  * @brief return whether the reference color is detected
@@ -362,7 +378,7 @@ boolean DistanceSensor::readState()
 {
     readValue();
 
-    return _distance != 0 ? true : false;
+    return _distance > 1 ? true : false;
 }
 
 /**
@@ -382,5 +398,5 @@ int DistanceSensor::getValue()
  */
 boolean DistanceSensor::getState()
 {
-    return _distance != 0 ? true : false;
+    return _distance > 1 ? true : false;
 }
