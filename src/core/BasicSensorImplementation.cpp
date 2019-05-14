@@ -95,6 +95,8 @@ int Color::compare(Color color)
     return abs(color.getRed() - _colors[0])*3 + abs(color.getGreen() - _colors[1])*3 + abs(color.getBlue() - _colors[2])*3;
 }
 
+//------------------------------------------------------------------------------
+
 /**
  * @brief Construct a new Color Sensor:: Color Sensor object
  * 
@@ -298,4 +300,87 @@ boolean ColorSensor::readState()
 boolean ColorSensor::getState()
 {
     return _lineDetected;
+}
+
+//------------------------------------------------------------------------------
+
+
+/**
+ * @brief Construct a new Distance Sensor:: Distance Sensor object
+ * 
+ * @param echoPin 
+ * @param triggerPin 
+ * @param id 
+ * @param name 
+ */
+DistanceSensor::DistanceSensor(int echoPin, int triggerPin, char id, String name) : BasicSensor(echoPin, id, name)
+{
+    _pin = echoPin;
+    _echoPin = echoPin;
+    _triggerPin = triggerPin;
+    _id = id;
+    _name = name;
+}
+
+/**
+ * @brief 
+ * 
+ */
+void DistanceSensor::setUp()
+{
+    pinMode(_triggerPin, OUTPUT);
+    pinMode(_echoPin, INPUT);
+    digitalWrite(_triggerPin, LOW);
+}
+
+/**
+ * @brief return the distance in cm
+ * 
+ * @return int 
+ */
+int DistanceSensor::readValue()
+{
+    digitalWrite(_triggerPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(_triggerPin, LOW);
+
+    long measure = pulseIn(_echoPin, HIGH, DistanceSensor::MEASURE_TIMEOUT);
+
+    float rawDistance = (measure / 2.0) * DistanceSensor::SOUND_SPEED * 100;
+
+    _distance = (int)rawDistance;
+
+    return _distance;
+}
+
+/**
+ * @brief 
+ * 
+ * @return boolean 
+ */
+boolean DistanceSensor::readState()
+{
+    readValue();
+
+    return _distance != 0 ? true : false;
+}
+
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
+int DistanceSensor::getValue()
+{
+    return _distance;
+}
+
+/**
+ * @brief 
+ * 
+ * @return boolean 
+ */
+boolean DistanceSensor::getState()
+{
+    return _distance != 0 ? true : false;
 }
