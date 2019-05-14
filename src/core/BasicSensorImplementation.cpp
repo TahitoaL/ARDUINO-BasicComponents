@@ -378,7 +378,7 @@ boolean DistanceSensor::readState()
 {
     readValue();
 
-    return _distance != 0 ? true : false;
+    return _distance > 1 ? true : false;
 }
 
 /**
@@ -398,5 +398,5 @@ int DistanceSensor::getValue()
  */
 boolean DistanceSensor::getState()
 {
-    return _distance != 0 ? true : false;
+    return _distance > 1 ? true : false;
 }
