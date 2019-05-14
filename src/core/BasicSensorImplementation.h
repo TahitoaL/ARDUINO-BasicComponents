@@ -87,11 +87,12 @@ class DistanceSensor : public BasicSensor {
         virtual boolean readState();
         virtual int getValue();
         virtual boolean getState();
+        int getLastValue();
+        boolean getLastState();
     
     protected:
         int _echoPin;
         int _triggerPin;
-        int _distance;
 
         static const unsigned long MEASURE_TIMEOUT = 25000UL;
         static const float SOUND_SPEED = 340.0;
