@@ -74,4 +74,25 @@ class ColorSensor : public BasicSensor {
         boolean _lineDetected;
 };
 
+class DistanceSensor : public BasicSensor {
+
+    public:
+        DistanceSensor(int echoPin, int triggerPin, char id);
+
+        virtual void setUp();
+        virtual int readValue();
+        virtual boolean readState();
+        virtual int getValue();
+        virtual boolean getState();
+    
+    protected:
+        int _echoPin;
+        int _triggerPin;
+        int _distance;
+
+        static const unsigned long MEASURE_TIMEOUT = 25000UL;
+        static const float SOUND_SPEED = 340.0;
+
+};
+
 #endif
