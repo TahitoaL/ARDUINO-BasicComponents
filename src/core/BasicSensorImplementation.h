@@ -80,7 +80,7 @@ class ColorSensor : public BasicSensor {
 class DistanceSensor : public BasicSensor {
 
     public:
-        DistanceSensor(int echoPin, int triggerPin, char id);
+        DistanceSensor(int echoPin, int triggerPin, char id, String name);
 
         virtual void setUp();
         virtual int readValue();
