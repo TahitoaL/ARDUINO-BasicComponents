@@ -364,9 +364,9 @@ int DistanceSensor::readValue()
 
     float rawDistance = (measure / 2.0) * DistanceSensor::SOUND_SPEED * 100;
 
-    _distance = (int)rawDistance;
+    _value[0] = (int)rawDistance;
 
-    return _distance;
+    return _value[0];
 }
 
 /**
@@ -378,7 +378,9 @@ boolean DistanceSensor::readState()
 {
     readValue();
 
-    return _distance > 10 ? true : false;
+    _state[0] = _value[0] > 10 ? true : false;
+
+    return _state[0];
 }
 
 /**
@@ -388,7 +390,7 @@ boolean DistanceSensor::readState()
  */
 int DistanceSensor::getValue()
 {
-    return _distance;
+    return _value[0];
 }
 
 /**
@@ -398,5 +400,25 @@ int DistanceSensor::getValue()
  */
 boolean DistanceSensor::getState()
 {
-    return _distance > 10 ? true : false;
+    return _value[0] > 10 ? true : false;
+}
+
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
+int DistanceSensor::getLastValue()
+{
+    return _value[1];
+}
+
+/**
+ * @brief 
+ * 
+ * @return boolean 
+ */
+boolean DistanceSensor::getLastState()
+{
+    return _state[1];
 }
