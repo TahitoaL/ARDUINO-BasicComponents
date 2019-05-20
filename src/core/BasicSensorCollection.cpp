@@ -1,6 +1,12 @@
 #include "Arduino.h"
 #include "./../BasicComponents.h"
 
+/**
+ * @brief Construct a new Basic Sensor Collection:: Basic Sensor Collection object
+ * 
+ * @param id 
+ * @param name 
+ */
 BasicSensorCollection::BasicSensorCollection(int id, String name)
 {
     _id = id;
